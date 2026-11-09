@@ -1,0 +1,122 @@
+/* fonts are served from this repo (/fonts), no external requests */
+/* @font-face {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('../../fonts/inter-latin.woff2') format('woff2');
+} */
+
+@font-face {
+  font-family: 'Roboto Condensed';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../../fonts/roboto-condensed-bold.woff2') format('woff2');
+}
+
+.try-on-info {
+  max-width: 508px;
+  margin: 20px 0 0;
+  color: #000;
+  font-family: Inter, roboto, sans-serif;
+  container-type: inline-size;
+}
+
+/* mobile values first; desktop (Figma 508 x 141 box) below */
+.try-on-info .try-on-info-box {
+  box-sizing: border-box;
+  border-radius: 0;
+  padding: 20px 13px 17px;
+  background-color: #F1F2F6;
+}
+
+.try-on-info .try-on-info-title,
+.try-on-info .try-on-info-text {
+  margin: 0;
+}
+
+.try-on-info .try-on-info-title {
+  color: #000;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+/* narrow box: one sentence per line ("Try it on, virtually." / "No guesswork.") */
+.try-on-info .try-on-info-title span {
+  display: block;
+}
+
+.try-on-info .try-on-info-text {
+  margin-top: 6px;
+  color: #333;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.try-on-info .try-on-info-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 44px;
+  margin-top: 16px;
+  border: 1px solid #c1f377;
+  border-radius: 0;
+  padding: 0 16px;
+  background-color: #c1f377;
+  color: #0e0e0e;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: filter 0.2s;
+}
+
+.try-on-info .try-on-info-button:hover,
+.try-on-info .try-on-info-button:focus-visible {
+  filter: brightness(0.92);
+}
+
+.try-on-info .try-on-info-sparkle {
+  display: flex;
+  flex: none;
+}
+
+@media (width >= 900px) {
+  .try-on-info .try-on-info-box {
+    padding: 20px 18px 17px;
+  }
+
+  .try-on-info .try-on-info-text {
+    margin-top: 3px;
+  }
+
+  .try-on-info .try-on-info-button {
+    margin-top: 20px;
+  }
+}
+
+/* wide box (desktop Figma, 508px): title on one line */
+@container (width >= 460px) {
+  .try-on-info .try-on-info-title span {
+    display: inline;
+  }
+}
+
+.try-on-info[hidden],
+.try-on-info-wrapper[hidden],
+.try-on-info.button {
+  display: none;
+}

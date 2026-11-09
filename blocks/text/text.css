@@ -1,0 +1,76 @@
+/* fonts are served from this repo (/fonts), no external requests */
+@font-face {
+  font-family: Anton;
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../../fonts/anton-regular.woff2') format('woff2');
+}
+ 
+@font-face {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('../../fonts/inter-latin.woff2') format('woff2');
+}
+ 
+@font-face {
+  font-family: 'Roboto Condensed';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../../fonts/roboto-condensed-bold.woff2') format('woff2');
+}
+ 
+.text {
+  max-width: 1301px;
+  margin: 0 auto;
+  color: var(--text-block-color, #000);
+  font-family: Inter, roboto, sans-serif;
+}
+ 
+.text .text-content > * {
+  margin: 0;
+}
+ 
+.text .text-title {
+  font-family: Anton, 'Roboto Condensed', 'Arial Narrow', sans-serif;
+  font-size: 44px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+ 
+.text .text-eyebrow {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+ 
+.text .text-description {
+  max-width: 600px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+ 
+.text .text-content > * + * {
+  margin-top: 8px;
+}
+ 
+@media (width >= 900px) {
+  .text .text-title {
+    font-size: 80px;
+  }
+ 
+  .text .text-description {
+    font-size: 16px;
+  }
+ 
+  .text .text-content > * + * {
+    margin-top: 12px;
+  }
+}

@@ -1,0 +1,56 @@
+.product-info .product-info-item {
+  border-bottom: 1px solid #000;
+}
+
+.product-info .product-info-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 55px;
+  font-family: var(--heading-font-family);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  list-style: none;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.product-info .product-info-title::-webkit-details-marker {
+  display: none;
+}
+
+/* figma: a 12 x 12 plus centered in a 24 x 24 box */
+.product-info .product-info-title::after {
+  content: '';
+  flex: none;
+  width: 24px;
+  height: 24px;
+  background:
+    linear-gradient(#000, #000) center / 12px 2px no-repeat,
+    linear-gradient(#000, #000) center / 2px 12px no-repeat;
+}
+
+.product-info .product-info-item[open] .product-info-title::after {
+  background: linear-gradient(#000, #000) center / 12px 2px no-repeat;
+}
+
+.product-info .product-info-title:focus-visible {
+  outline: 2px solid #000;
+  outline-offset: 2px;
+}
+
+.product-info .product-info-body {
+  padding: 0 0 16px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.product-info .product-info-body p {
+  margin: 0 0 6px;
+}
+
+.product-info .product-info-item:last-child {
+  border-bottom: 0;
+}

@@ -1,0 +1,21 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+
+steps:
+  - checkout: self
+    fetchDepth: 0
+    persistCredentials: true
+
+  - script: |
+      git remote add github https://$(GITHUB_PAT)@github.com/Sridharkrao-cts/MomentsAAP.git
+      git push github HEAD:refs/heads/$(Build.SourceBranchName) --force
+    displayName: Mirror to GitHub
