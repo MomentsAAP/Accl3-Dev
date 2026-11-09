@@ -1,0 +1,54 @@
+.product-title-price {
+  margin-bottom: 30px;
+}
+
+.product-title-price .product-title-price-name {
+  margin: 0 0 8px;
+  font-family: var(--heading-font-family);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.product-title-price .product-title-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.product-title-price .product-title-price-now {
+  font-family: var(--heading-font-family);
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.product-title-price .product-title-price-was {
+  color: #6b6b6b;
+  font-family: var(--heading-font-family);
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.product-title-price .product-title-price-mrp {
+  margin: 0;
+  color: #404040;
+  font-size: 14px;
+}
+
+@media (width >= 900px) {
+  .product-title-price .product-title-price-name {
+    font-size: 32px;
+  }
+}
+
+/* keep the title clear of the heart that sits on its row when there is no discount */
+.pdp-no-discount .product-title-price .product-title-price-name {
+  padding-right: 44px;
+}

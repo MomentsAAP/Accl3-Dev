@@ -1,0 +1,524 @@
+/* try-on-header block — fully scoped under .try-on-header
+ *
+ * Mobile-first. Breakpoints:
+ *   < 900px   mobile/tablet : [☰]        [logo]        [bag]
+ *   ≥ 900px   desktop       : [logo]  [Men Women Kids New Drops]  [search heart bag avatar ⌄]
+ *
+ * On < 900px the search, wishlist and account links leave the bar and are
+ * offered inside the opened menu instead (see addMobileMenuExtras in the JS).
+ */
+
+/* Self-hosted font (EDS best practice: no third-party font requests).
+   Drop poppins-medium.woff2 and poppins-semibold.woff2 into /fonts. Until they
+   exist (or if the user has Poppins installed) the stack below falls back
+   gracefully. */
+@font-face {
+  font-family: 'Try-On Poppins';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src:
+    local('Poppins Medium'),
+    local('Poppins-Medium'),
+    url('../../fonts/poppins-medium.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Try-On Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src:
+    local('Poppins SemiBold'),
+    local('Poppins-SemiBold'),
+    url('../../fonts/poppins-semibold.woff2') format('woff2');
+}
+
+.try-on-header {
+  /* colors */
+  --try-on-accent: #f26b3a;
+  --try-on-text: #1b1b1b;
+  --try-on-bg: #fff;
+  --try-on-hover: #f26b3a;
+  --try-on-border: #e6e6e6;
+  --try-on-badge-bg: #1b1b1b;
+  --try-on-badge-text: #fff;
+
+  /* typography — geometric sans matching the design */
+  --try-on-font: 'Try-On Poppins', 'Poppins', 'Montserrat', 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', arial, sans-serif;
+  --try-on-link-size: 14px;
+  --try-on-link-weight: 600;
+
+  /* sizing */
+  --try-on-nav-height: 64px;
+  --try-on-logo-height: 32px;
+  --try-on-icon-size: 24px;
+  --try-on-hit-size: 44px; /* touch target on mobile/tablet; desktop drops to 24px (WCAG 2.2 AA 2.5.8 minimum) */
+  --try-on-avatar-size: 40px;
+  --try-on-chevron-size: 12px;
+  --try-on-gutter: 16px;
+  --try-on-max-width: 1440px;
+
+  display: block;
+
+  /* reserve the bar's space (nav + 1px border) so the fixed mobile bar never
+     overlaps content and the page does not shift when the block decorates */
+  min-height: calc(var(--try-on-nav-height) + 1px);
+}
+
+.try-on-header .nav-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 100%;
+  background-color: var(--try-on-bg);
+  border-bottom: 1px solid var(--try-on-border);
+}
+
+.try-on-header nav {
+  box-sizing: border-box;
+  display: grid;
+
+  /* mobile: hamburger left, logo centred on the viewport, bag right.
+     1fr | auto | 1fr keeps the logo centred however wide the sides are. */
+  grid-template: 'hamburger brand tools' var(--try-on-nav-height) / 1fr auto 1fr;
+  align-items: center;
+  column-gap: 8px;
+  margin: 0 auto;
+  max-width: var(--try-on-max-width);
+  min-height: var(--try-on-nav-height);
+  padding: 0 var(--try-on-gutter);
+  color: var(--try-on-text);
+  font-family: var(--try-on-font);
+}
+
+.try-on-header nav p {
+  margin: 0;
+  line-height: 1;
+}
+
+.try-on-header a:any-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* visible keyboard focus for every interactive element */
+.try-on-header a:focus-visible,
+.try-on-header button:focus-visible,
+.try-on-header .nav-sections [role='button']:focus-visible {
+  outline: 2px solid var(--try-on-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ---------- brand ---------- */
+.try-on-header .nav-brand {
+  grid-area: brand;
+  display: flex;
+  align-items: center;
+  justify-self: center;
+  min-width: 0;
+}
+
+.try-on-header .nav-brand a {
+  display: inline-flex;
+  align-items: center;
+}
+
+.try-on-header .nav-brand img {
+  width: auto;
+  height: var(--try-on-logo-height);
+  max-width: 100%;
+  object-fit: contain;
+}
+
+/* ---------- tools (right-hand icon links) ---------- */
+.try-on-header .nav-tools {
+  grid-area: tools;
+  justify-self: end;
+
+  /* the glyph, not the 44px touch box, sits on the design's right gutter */
+  margin-right: calc((var(--try-on-icon-size) - var(--try-on-hit-size)) / 2);
+}
+
+.try-on-header .nav-tools ul {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.try-on-header .nav-tools li {
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
+/* every icon control meets the hit size while the glyph stays icon-sized */
+.try-on-header .nav-tools a,
+.try-on-header .nav-tools .nav-tools-cart {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--try-on-hit-size);
+  min-height: var(--try-on-hit-size);
+}
+
+.try-on-header .nav-tools .icon {
+  display: inline-flex;
+  width: var(--try-on-icon-size);
+  height: var(--try-on-icon-size);
+}
+
+.try-on-header .nav-tools .icon img {
+  width: 100%;
+  height: 100%;
+}
+
+/* search, wishlist and account: desktop only. On mobile the design keeps just
+   the bag in the bar; these links are offered inside the opened menu. */
+.try-on-header .nav-tools .nav-tools-search,
+.try-on-header .nav-tools .nav-tools-wishlist,
+.try-on-header .nav-tools .nav-tools-account {
+  display: none;
+}
+
+/* avatar link: one round control + chevron */
+.try-on-header .nav-tools .nav-tools-avatar {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+/* avatar only — not the chevron icon image */
+.try-on-header .nav-tools-avatar > picture img,
+.try-on-header .nav-tools-avatar > img {
+  width: var(--try-on-avatar-size);
+  height: var(--try-on-avatar-size);
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.try-on-header .nav-tools-avatar picture {
+  display: inline-flex;
+  line-height: 0;
+}
+
+.try-on-header .nav-tools .nav-tools-chevron {
+  display: inline-flex;
+  align-items: center;
+  width: var(--try-on-chevron-size);
+  height: var(--try-on-chevron-size);
+}
+
+.try-on-header .nav-tools .nav-tools-chevron img {
+  width: var(--try-on-chevron-size);
+  height: var(--try-on-chevron-size);
+}
+
+.try-on-header .nav-tools a:hover,
+.try-on-header .nav-tools a:focus-visible {
+  opacity: 0.6;
+}
+
+/* bag count badge — dark bubble centred on the bag icon's top-right corner.
+   The host may be a plain <p> (author left the bag unlinked), so it is pinned
+   relative to anchor the absolutely-positioned bubble. The offsets are
+   measured from the host's centre so the bubble tracks the icon, not the
+   larger touch box around it. */
+.try-on-header .nav-tools-cart {
+  position: relative;
+}
+
+.try-on-header .nav-tools-badge {
+  position: absolute;
+  top: calc(50% - (var(--try-on-icon-size) / 2) - 6px);
+  right: calc(50% - (var(--try-on-icon-size) / 2) - 6px);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background-color: var(--try-on-badge-bg);
+  color: var(--try-on-badge-text);
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.try-on-header .nav-tools-badge[hidden] {
+  display: none;
+}
+
+/* ---------- sections (centre nav links) ---------- */
+.try-on-header .nav-sections {
+  grid-area: sections;
+  display: none;
+  color: var(--try-on-text);
+}
+
+.try-on-header .nav-sections ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* authors deliver the links as plain <p> text, so style the item itself */
+.try-on-header .nav-sections li,
+.try-on-header .nav-sections a:any-link {
+  font-size: var(--try-on-link-size);
+  font-weight: var(--try-on-link-weight);
+  line-height: 1.4;
+}
+
+/* the fragment carries a stray <hr> after "Virtual Try-On"; it is not part of
+   the design and would otherwise stretch its list item, so hide it */
+.try-on-header .nav-sections hr {
+  display: none;
+}
+
+.try-on-header .nav-sections li {
+  cursor: pointer;
+}
+
+/* a nav item may carry a small inline image accent (e.g. the flame before
+   "New Drops"). Keep it icon-sized and on the same line as the label. */
+.try-on-header .nav-sections li,
+.try-on-header .nav-sections li p {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.try-on-header .nav-sections li picture {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  line-height: 0;
+}
+
+.try-on-header .nav-sections li img {
+  width: auto;
+  height: 1.25em;
+  object-fit: contain;
+}
+
+.try-on-header .nav-sections li:hover,
+.try-on-header .nav-sections li:focus-visible,
+.try-on-header .nav-sections a:hover,
+.try-on-header .nav-sections a:focus-visible {
+  color: var(--try-on-hover);
+}
+
+/* selected / current item — set on click or when the link matches the page */
+.try-on-header .nav-sections li.active,
+.try-on-header .nav-sections a.active {
+  color: var(--try-on-accent);
+}
+
+/* search / wishlist / account links that only exist inside the mobile menu */
+.try-on-header .nav-sections .nav-sections-extras {
+  display: none;
+}
+
+/* ---------- hamburger (mobile / tablet only) ---------- */
+.try-on-header .nav-hamburger {
+  grid-area: hamburger;
+  display: flex;
+  align-items: center;
+  justify-self: start;
+
+  /* the three bars, not the 44px touch box, sit on the design's left gutter */
+  margin-left: calc((20px - var(--try-on-hit-size)) / 2);
+}
+
+.try-on-header .nav-hamburger button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--try-on-hit-size);
+  height: var(--try-on-hit-size);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.try-on-header .nav-hamburger-icon,
+.try-on-header .nav-hamburger-icon::before,
+.try-on-header .nav-hamburger-icon::after {
+  box-sizing: border-box;
+  display: block;
+  position: relative;
+  width: 20px;
+  height: 2px;
+  border-radius: 2px;
+  background: currentcolor;
+}
+
+.try-on-header .nav-hamburger-icon::before,
+.try-on-header .nav-hamburger-icon::after {
+  content: '';
+  position: absolute;
+  left: 0;
+}
+
+.try-on-header .nav-hamburger-icon::before {
+  top: -6px;
+}
+
+.try-on-header .nav-hamburger-icon::after {
+  top: 6px;
+}
+
+.try-on-header nav[data-open] .nav-hamburger-icon {
+  background: transparent;
+}
+
+.try-on-header nav[data-open] .nav-hamburger-icon::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+
+.try-on-header nav[data-open] .nav-hamburger-icon::after {
+  top: 0;
+  transform: rotate(-45deg);
+}
+
+/* ---------- mobile / tablet: open menu ---------- */
+@media (max-width: 899px) {
+  /* drops the links below the bar. Height is capped to the viewport below the
+     bar and scrolls, so a long link list always stays reachable. */
+  .try-on-header nav[data-open] .nav-sections {
+    display: block;
+    position: absolute;
+    top: var(--try-on-nav-height);
+    left: 0;
+    box-sizing: border-box;
+    width: 100%;
+    max-height: calc(100vh - var(--try-on-nav-height));
+    max-height: calc(100dvh - var(--try-on-nav-height));
+    padding: 8px var(--try-on-gutter) 16px;
+    overflow-y: auto;
+    background-color: var(--try-on-bg);
+    border-bottom: 1px solid var(--try-on-border);
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .try-on-header nav[data-open] .nav-sections ul {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  /* comfortable 44px touch rows inside the menu */
+  .try-on-header nav[data-open] .nav-sections li {
+    min-height: 44px;
+    font-size: 16px;
+  }
+
+  .try-on-header nav[data-open] .nav-sections a:any-link {
+    font-size: inherit;
+  }
+
+  /* secondary links (search / wishlist / account) under a divider */
+  .try-on-header nav[data-open] .nav-sections .nav-sections-extras {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--try-on-border);
+  }
+
+  .try-on-header nav[data-open] .nav-sections .nav-sections-extras a {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 44px;
+  }
+}
+
+/* ---------- tablet ---------- */
+@media (min-width: 600px) {
+  .try-on-header {
+    --try-on-gutter: 24px;
+  }
+}
+
+/* ---------- desktop ---------- */
+@media (min-width: 900px) {
+  .try-on-header {
+    --try-on-gutter: clamp(24px, 4.7vw, 64px);
+    --try-on-hit-size: 24px;
+  }
+
+  .try-on-header .nav-wrapper {
+    position: relative;
+  }
+
+  /* 1fr | auto | 1fr keeps the links centred on the viewport regardless of how
+     wide the logo and the tools are */
+  .try-on-header nav {
+    grid-template: 'brand sections tools' var(--try-on-nav-height) / 1fr auto 1fr;
+    column-gap: 24px;
+  }
+
+  .try-on-header .nav-brand {
+    justify-self: start;
+  }
+
+  .try-on-header .nav-hamburger {
+    display: none;
+  }
+
+  .try-on-header .nav-sections {
+    display: block;
+    justify-self: center;
+  }
+
+  .try-on-header .nav-sections ul {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    white-space: nowrap;
+  }
+
+  .try-on-header .nav-sections .nav-sections-extras {
+    display: none;
+  }
+
+  .try-on-header .nav-tools {
+    margin-right: 0;
+  }
+
+  .try-on-header .nav-tools ul {
+    gap: 9px;
+  }
+
+  .try-on-header .nav-tools .nav-tools-search,
+  .try-on-header .nav-tools .nav-tools-wishlist {
+    display: flex;
+  }
+
+  .try-on-header .nav-tools .nav-tools-account {
+    display: flex;
+    margin-left: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .try-on-header .nav-sections li,
+  .try-on-header .nav-sections a,
+  .try-on-header .nav-tools a {
+    transition: color 0.15s ease, opacity 0.15s ease;
+  }
+}

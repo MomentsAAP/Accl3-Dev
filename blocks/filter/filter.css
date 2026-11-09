@@ -1,0 +1,409 @@
+/* Filter block. Every selector starts with .filter so nothing leaks to other blocks.
+
+   Layout (Figma): the filter is a stack of separate grey section cards, 8px apart:
+   CATEGORIES / SIZE / COLOUR / PRICE. Each card is a header (title + 24px chevron) with the
+   options below. All cards start open; the header collapses / expands its card. */
+
+.filter {
+  --filter-accent: #ff7a4d; /* only the active-count bubble on the mobile button */
+  --filter-ink: #111;
+  --filter-muted: #6b6b6b;
+  --filter-line: #d0d1d9; /* slider track outside the chosen range */
+  --filter-bg: #f1f2f8; /* the grey section cards */
+  --filter-box: #bdbdc4; /* checkbox border */
+
+  color: var(--filter-ink);
+  font-size: 16px;
+  -webkit-tap-highlight-color: transparent; /* no coloured flash when tapping on a phone */
+}
+
+/* ---------- Mobile Filters button: 48px round, funnel icon (hidden on desktop) ---------- */
+.filter .filter-toggle {
+  position: relative;
+  box-sizing: border-box;
+  display: grid;
+  place-content: center;
+  width: 48px;
+  height: 48px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background-color: var(--filter-bg);
+  color: var(--filter-ink);
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.filter .filter-toggle svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentcolor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Slightly darker only while a mouse is over it (touch screens keep "hover" stuck after a tap) */
+@media (hover: hover) {
+  .filter .filter-toggle:hover {
+    background-color: #e4e5ee;
+  }
+}
+
+.filter .filter-toggle:focus-visible {
+  outline: 2px solid var(--link-color, #035fe6);
+  outline-offset: 2px;
+}
+
+/* Active-filter count: a small bubble on the button's top-right corner */
+.filter .filter-badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  box-sizing: border-box;
+  display: grid;
+  place-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  border-radius: 10px;
+  background: var(--filter-accent);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.filter .filter-badge[hidden] { display: none; }
+
+.filter:not(.is-open) .filter-panel { display: none; }
+
+.filter .filter-panel { margin-top: 12px; }
+
+/* ---------- The section cards ---------- */
+.filter .filter-form {
+  display: grid;
+  gap: 8px; /* space between the grey cards */
+}
+
+.filter .filter-group {
+  box-sizing: border-box;
+  min-width: 0;
+  padding: 12px 16px 16px;
+  background: var(--filter-bg);
+}
+
+.filter .filter-heading {
+  margin: 0;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+/* Header: TITLE on the left, 24px chevron on the right. The whole row is the button. */
+.filter .filter-title {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  min-height: 24px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--filter-ink);
+  font-family: var(--heading-font-family, inherit);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  text-align: left;
+  text-transform: uppercase;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.filter .filter-title:focus-visible {
+  outline: 2px solid var(--link-color, #035fe6);
+  outline-offset: 2px;
+}
+
+/* Open = chevron up. Collapsed = chevron down. */
+.filter .filter-title svg {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentcolor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.filter .filter-title[aria-expanded='false'] svg {
+  transform: rotate(180deg);
+}
+
+/* Body: 15px under the header. Lists and the price slider get 16px more at the bottom;
+   the Size buttons sit directly on the card's bottom padding (as in the design). */
+.filter .filter-group-body {
+  padding-top: 15px;
+}
+
+.filter .filter-group:not(.filter-group-size) .filter-group-body {
+  padding-bottom: 16px;
+}
+
+/* ---------- Checkbox rows (Categories and Colour): 20px box, 16px between rows ---------- */
+.filter .filter-options-check,
+.filter .filter-options-swatch {
+  display: grid;
+  gap: 16px;
+}
+
+.filter .filter-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 20px;
+  font-size: 16px;
+  line-height: 20px;
+  cursor: pointer;
+}
+
+.filter .filter-group-category .filter-option {
+  font-size: 16px; /* Categories are 18px in the design, Colour is 16px */
+}
+
+.filter .filter-option input {
+  appearance: none;
+  box-sizing: border-box;
+  display: grid;
+  place-content: center;
+  flex: none;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  border: 1px solid var(--filter-box);
+  border-radius: 2px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.filter .filter-option input:checked {
+  border-color: var(--filter-ink);
+  background: var(--filter-ink);
+}
+
+.filter .filter-option input:checked::after {
+  content: '';
+  width: 10px;
+  height: 5px;
+  border-bottom: 2px solid #fff;
+  border-left: 2px solid #fff;
+  transform: translateY(-1px) rotate(-45deg);
+}
+
+.filter .filter-option input:focus-visible,
+.filter .filter-pill input:focus-visible + .filter-pill-text {
+  outline: 2px solid var(--link-color, #035fe6);
+  outline-offset: 2px;
+}
+
+.filter .filter-count { color: var(--filter-muted); }
+
+/* Colour dot: 14px, 8px before the name */
+.filter .filter-swatch {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  margin-right: -4px; /* 12px gap from the checkbox, 8px to the name */
+  border-radius: 50%;
+  background: var(--swatch, #ccc);
+  box-shadow: inset 0 0 0 1px rgb(0 0 0 / 20%); /* keeps the white dot visible */
+}
+
+/* ---------- Size buttons: 3 per row, 8px apart, 43px tall ---------- */
+.filter .filter-options-pill {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.filter .filter-pill {
+  position: relative;
+  display: block;
+  cursor: pointer;
+}
+
+.filter .filter-pill input {
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: pointer;
+}
+
+.filter .filter-pill-text {
+  box-sizing: border-box;
+  display: grid;
+  place-content: center;
+  width: 100%;
+  height: 43px;
+  border: 1px solid var(--filter-ink);
+  border-radius: 0;
+  background: #fff;
+  color: var(--filter-ink);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+/* Selected size: black button, white text */
+.filter .filter-pill input:checked + .filter-pill-text {
+  background: var(--filter-ink);
+  color: #fff;
+}
+
+/* ---------- Price: black dual-handle slider, each value under its handle ---------- */
+.filter .filter-group-price {
+  --lo: 0; /* handle positions, 0 to 1 (set from JS) */
+  --hi: 1;
+  --thumb: 14px;
+}
+
+.filter .price-slider {
+  position: relative;
+  height: 22px;
+}
+
+/* The track is inset by half a handle, so the black fill lines up with the handles */
+.filter .price-track {
+  position: absolute;
+  top: 50%;
+  right: calc(var(--thumb) / 2);
+  left: calc(var(--thumb) / 2);
+  height: 2px;
+  background: var(--filter-line);
+  transform: translateY(-50%);
+}
+
+.filter .price-track::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: calc((1 - var(--hi)) * 100%);
+  bottom: 0;
+  left: calc(var(--lo) * 100%);
+  background: var(--filter-ink);
+}
+
+/* Two range inputs stacked on top of each other; only the handles catch the mouse */
+.filter .price-slider input[type='range'] {
+  appearance: none;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 22px;
+  margin: 0;
+  background: transparent;
+  pointer-events: none;
+  z-index: 1;
+}
+/* Ensure active/focused slider thumb is on top */
+.filter .price-slider input[type='range']:focus,
+.filter .price-slider input[type='range']:active {
+  z-index: 3;
+}
+
+/* Class added dynamically when min and max collide at upper bounds */
+.filter .price-slider input[type='range'].is-active-min {
+  z-index: 2;
+}
+.filter .price-slider input[type='range']::-webkit-slider-runnable-track {
+  height: 22px;
+  background: transparent;
+}
+
+.filter .price-slider input[type='range']::-moz-range-track {
+  height: 22px;
+  background: transparent;
+}
+
+/* Handle: black ring with a white centre */
+.filter .price-slider input[type='range']::-webkit-slider-thumb {
+  appearance: none;
+  box-sizing: border-box;
+  width: var(--thumb);
+  height: var(--thumb);
+  margin-top: 4px;
+  border: 5px solid var(--filter-ink);
+  border-radius: 50%;
+  background: #fff;
+  cursor: grab;
+  pointer-events: auto;
+}
+
+.filter .price-slider input[type='range']::-moz-range-thumb {
+  box-sizing: border-box;
+  width: var(--thumb);
+  height: var(--thumb);
+  border: 5px solid var(--filter-ink);
+  border-radius: 50%;
+  background: #fff;
+  cursor: grab;
+  pointer-events: auto;
+}
+
+/* The ring is drawn on the handle (below), not around the whole slider */
+.filter .price-slider input[type='range']:focus-visible {
+  outline: none;
+}
+
+.filter .price-slider input[type='range']:focus-visible::-webkit-slider-thumb {
+  outline: 2px solid var(--link-color, #035fe6);
+  outline-offset: 2px;
+}
+
+.filter .price-slider input[type='range']:focus-visible::-moz-range-thumb {
+  outline: 2px solid var(--link-color, #035fe6);
+  outline-offset: 2px;
+}
+
+/* "$20" and "$170": 16px, centred under their handle */
+.filter .price-values {
+  position: relative;
+  height: 21px;
+  margin: 0 calc(var(--thumb) / 2);
+}
+
+.filter .price-value {
+  position: absolute;
+  top: 0;
+  left: calc(var(--lo) * 100%);
+  font-size: 16px;
+  line-height: 1.3;
+  white-space: nowrap;
+  transform: translateX(-50%);
+}
+
+.filter .price-value-max {
+  left: calc(var(--hi) * 100%);
+}
+
+/* ---------- Desktop: always-open stack of cards (no Filters button) ---------- */
+@media (width >= 900px) {
+  .filter .filter-toggle { display: none; }
+
+  .filter:not(.is-open) .filter-panel,
+  .filter .filter-panel {
+    display: block;
+    margin-top: 0;
+  }
+}

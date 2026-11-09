@@ -1,0 +1,172 @@
+/* Banner block: PLP category banner.
+   Mobile: image on top fading into the orange, text below.
+   Desktop (>= 900px): image fills the banner (anchored right), text over the left side. */
+.banner {
+  --banner-bg: #f06845; /* design orange */
+  --banner-ink: #fff;
+
+  position: relative;
+  overflow: hidden;
+  background-color: var(--banner-bg);
+  color: var(--banner-ink);
+  cursor: default;
+  user-select: none;
+}
+
+/* ---------- Image ---------- */
+.banner .banner-media {
+  position: relative;
+  aspect-ratio: 4 / 5;
+}
+
+.banner .banner-media picture,
+.banner .banner-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.banner .banner-media img {
+  object-fit: cover;
+  object-position: var(--banner-focus-x, 82%) top;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
+.banner .banner-media::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 35%;
+  background: linear-gradient(to bottom, transparent, var(--banner-bg));
+  pointer-events: none;
+}
+
+.banner.no-image .banner-media {
+  display: none;
+}
+
+/* ---------- Text ---------- */
+.banner .banner-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: -24px;
+  padding: 0 16px 24px;
+}
+
+.banner.no-image .banner-content {
+  margin-top: 0;
+  padding-top: 24px;
+}
+
+.banner .banner-content > * {
+  margin: 0;
+  color: inherit;
+}
+
+/* "AW 26-27  THANKSGIVING" - Supports p tag, h1-h6 tags */
+.banner .banner-content .banner-eyebrow,
+.banner .banner-content p.banner-eyebrow,
+.banner .banner-content h1.banner-eyebrow,
+.banner .banner-content h2.banner-eyebrow,
+.banner .banner-content h3.banner-eyebrow {
+  margin: 0 0 4px 0;
+  font-family: var(--heading-font-family);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  white-space: pre-wrap;
+}
+
+/* "LAYER UP." / "STAND OUT." */
+.banner .banner-content .banner-title,
+.banner .banner-content h1.banner-title,
+.banner .banner-content h2.banner-title,
+.banner .banner-content h3.banner-title {
+  margin: 0;
+  font-family: var(--heading-font-family);
+  font-size: clamp(40px, 9vw, 64px);
+  font-weight: 800;
+  line-height: 0.88;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.banner .banner-content .banner-title + .banner-title {
+  margin-top: 0;
+}
+
+.banner .banner-content .banner-text,
+.banner .banner-content p.banner-text {
+  max-width: 34em;
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* ---------- Desktop ---------- */
+@media (width >= 900px) {
+  .banner {
+    display: flex;
+    align-items: center;
+    min-height: 320px;
+    aspect-ratio: 1440 / 500;
+  }
+
+  .banner .banner-media {
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: 90%;
+    overflow: hidden;
+    aspect-ratio: auto;
+  }
+
+  .banner .banner-media picture,
+  .banner .banner-media img {
+    height: auto;
+    min-height: 100%;
+  }
+
+  .banner .banner-media img {
+    object-position: right top;
+  }
+
+  .banner .banner-media::after {
+    inset: 0 auto 0 0;
+    width: 20%;
+    height: auto;
+    background: linear-gradient(to right, var(--banner-bg), transparent);
+  }
+
+  .banner .banner-content {
+    width: min(48%, 560px);
+    margin-top: 0;
+    padding: 40px 48px;
+    gap: 12px;
+  }
+
+  .banner .banner-content .banner-eyebrow,
+  .banner .banner-content p.banner-eyebrow,
+  .banner .banner-content h1.banner-eyebrow,
+  .banner .banner-content h2.banner-eyebrow,
+  .banner .banner-content h3.banner-eyebrow {
+    margin-bottom: 6px;
+    font-size: clamp(18px, 1.5vw, 24px);
+  }
+
+  .banner .banner-content .banner-title,
+  .banner .banner-content h1.banner-title,
+  .banner .banner-content h2.banner-title,
+  .banner .banner-content h3.banner-title {
+    font-size: clamp(56px, 6.2vw, 96px);
+  }
+
+  .banner .banner-content .banner-text,
+  .banner .banner-content p.banner-text {
+    font-size: 16px;
+  }
+}

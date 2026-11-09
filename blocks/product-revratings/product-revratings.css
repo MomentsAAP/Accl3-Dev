@@ -1,0 +1,33 @@
+.product-revratings {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.product-revratings .product-revratings-link {
+  color: #000;
+  font-family: inter, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.3;
+  text-decoration: underline;
+}
+
+.product-revratings .product-revratings-count {
+  font-weight: 400;
+}
+
+.product-revratings .product-revratings-link:focus-visible {
+  outline: 2px solid #000;
+  outline-offset: 2px;
+}
+
+.product-revratings .product-revratings-stars {
+  background: linear-gradient(90deg, #fd7246 var(--fill), #d6d6d6 var(--fill));
+  background-clip: text;
+  color: transparent;
+  font-size: 22px;
+  letter-spacing: 0;
+  line-height: 24px;
+}

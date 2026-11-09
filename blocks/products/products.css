@@ -1,0 +1,422 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+@font-face {
+  font-family: 'Roboto Condensed';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../../fonts/roboto-condensed-bold.woff2') format('woff2');
+}
+
+/* =====================================================================
+   Shared Products & Card Styles (Used in both PLP and PDP Collection)
+   ===================================================================== */
+
+.products {
+  --products-gap: 20px;
+}
+
+.products .products-toolbar {
+  display: flex;
+  align-items: center;
+  min-height: 40px;
+  margin-bottom: 16px;
+}
+
+.products .products-result-count {
+  margin: 0;
+  font-size: 16px;
+  color: var(--text-color);
+}
+
+.products .products-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 9px;
+  align-items: stretch; /* Ensures all cards in a row stretch to equal height */
+}
+
+@media (width >= 600px) {
+  .products .products-grid {
+    grid-template-columns: repeat(3, minmax(0, 318px));
+    justify-content: space-between;
+    gap: 48px 9px;
+  }
+}
+
+/* Card base setup */
+.products .products-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  height: 100%; /* Stretch full height of grid cell */
+  box-sizing: border-box;
+}
+
+.products .products-card-media {
+  position: relative;
+  flex: none;
+}
+
+.products .products-card-image-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.products .products-card-image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 318 / 449;
+  overflow: hidden;
+  background-color: #f3f4f6;
+}
+
+.products .products-card-image.is-empty::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 44px 44px;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23b0b0b0" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>');
+  opacity: 0.8;
+}
+
+.products .products-card-image picture,
+.products .products-card-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Card body fills remaining space */
+.products .products-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1 1 auto; /* Expands to fill variable content area */
+}
+
+.products .products-card-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.3;
+  letter-spacing: 0;
+  color: #0e0e0e;
+  font-family: 'Inter';
+}
+
+.products .products-card-link {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  width: fit-content;
+  max-width: 100%;
+  overflow: hidden;
+  color: inherit;
+  text-decoration: none;
+}
+
+.products .products-card-link:hover {
+  text-decoration: underline;
+}
+
+.products .products-card-image-link:focus-visible,
+.products .products-card-link:focus-visible,
+.products .products-card-reviews:focus-visible,
+.products .products-card-tryon:focus-visible {
+  outline: 2px solid var(--link-color, #035fe6);
+  outline-offset: 2px;
+}
+
+.products .products-card-prices {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+}
+
+.products .products-card-price,
+.products .products-card-was {
+  font-family: var(--heading-font-family);
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: #0e0e0e;
+}
+
+.products .products-card-was {
+  color: #B4B4B4;
+  font-size: 20px;
+  text-decoration: line-through;
+}
+
+.products .products-card-discount {
+  box-sizing: border-box;
+  min-width: 70px;
+  padding: 6px 13px;
+  background-color: #fcf55e;
+  color: #0e0e0e;
+  font-family: 'Inter';
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 12px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.products .products-card-rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 18px;
+  margin-top: 2px; /* Keeps rating block anchored above the button */
+}
+
+.products .products-card-reviews {
+  margin: -5px 0;
+  padding: 5px 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 14px;
+  line-height: 1;
+  color: #6b6b6b;
+  cursor: pointer;
+  font-family: 'Inter';
+}
+
+.products .products-card-reviews:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.products .products-card-stars {
+  --star-size: 15.4px;
+  --star-on: var(--products-star, #ff7a4d);
+  --star-off: #d9d9d9;
+  --fill: calc(var(--rating, 0) / 5 * 100%);
+  --star-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-1 -1 26 26'%3E%3Cpath d='M12 2l3 6.5 7 .9-5.2 4.8 1.4 7L12 17.8l-6.2 3.4 1.4-7L2 9.4l7-.9z'/%3E%3C/svg%3E");
+
+  flex: none;
+  display: block;
+  width: calc(var(--star-size) * 5);
+  height: var(--star-size);
+  font-size: 0;
+  color: transparent;
+  background: linear-gradient(90deg, var(--star-on) var(--fill), var(--star-off) var(--fill));
+  -webkit-mask: var(--star-mask) 0 0 / var(--star-size) var(--star-size) repeat-x;
+  mask: var(--star-mask) 0 0 / var(--star-size) var(--star-size) repeat-x;
+}
+
+/* Try-on Button: margin-top auto pushes it to the bottom of card */
+.products .products-card-tryon {
+  box-sizing: border-box;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  height: 44px;
+  margin-top: auto; /* Ensures horizontal alignment regardless of discount height */
+  padding: 0 16px;
+  border: 0;
+  background-color: #C1F377;
+  color: #0e0e0e;
+  font-family: var(--heading-font-family);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.products .products-card-tryon svg {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  fill: currentcolor;
+}
+
+.products .products-card-tryon:hover {
+  filter: brightness(0.95);
+}
+
+.products a.products-card-tryon {
+  text-decoration: none;
+}
+
+.products .products-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.products .products-more {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: calc(var(--products-gap) * 1.6);
+  padding-top: var(--products-gap);
+  box-sizing: border-box;
+  grid-column: 1 / -1;
+}
+
+.products .products-more[hidden] {
+  display: none;
+}
+
+.products .products-more-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: 44px;
+  padding: 0 16px;
+  border: 1px solid #111;
+  background-color: #fff;
+  font: inherit;
+  font-family: var(--heading-font-family, inherit);
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #111;
+  cursor: default;
+  pointer-events: none;
+  user-select: none;
+}
+
+.products .products-more-btn:hover,
+.products .products-more-btn:focus,
+.products .products-more-btn:active {
+  background-color: #fff;
+  color: #111;
+}
+
+.products .products-more-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.products .products-empty {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 32px 0;
+  text-align: center;
+  font-size: var(--body-font-size-s);
+  color: #6b6b6b;
+}
+
+/* Mobile responsive fixes */
+@media (width < 600px) {
+  .products .products-toolbar {
+    min-height: 33px;
+    margin-bottom: 16px;
+  }
+
+  .products .products-result-count {
+    font-size: 16px;
+    line-height: 1.15;
+    margin: 0;
+  }
+
+  .products .products-card {
+    gap: 10px;
+  }
+
+  .products .products-card-body {
+    gap: 5px;
+  }
+
+  .products .products-card-link {
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+  }
+
+  .products .products-card-title {
+    font-size: 12px;
+  }
+
+  .products .products-card-rating {
+    gap: 12px;
+  }
+
+  .products .products-card-stars {
+    --star-size: 17px;
+  }
+
+  .products .products-card-reviews-word {
+    display: none;
+  }
+
+  .products .products-card-tryon {
+    align-self: stretch;
+    gap: 8px;
+    height: auto;
+    min-height: 44px;
+    margin-top: auto; /* Ensures button sticks to card bottom in mobile view */
+    padding: 6px 8px;
+    font-size: 14px;
+    line-height: 1.1;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .products .products-card-tryon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .products .products-card-image {
+    aspect-ratio: 160 / 224;
+  }
+}
+
+/* =====================================================================
+   Collection mode overrides (PDP container adjustments only)
+   ===================================================================== */
+
+main > .section:has(.products.collection) {
+  padding-bottom: 24px;
+  background-color: #f9f9f9;
+}
+
+.products.collection {
+  max-width: 1296px;
+  margin: 24px auto 0;
+}
+
+@media (width >= 900px) {
+  main > .section:has(.products.collection) {
+    padding-bottom: 32px;
+  }
+
+  main > .section > .products-wrapper:has(> .products.collection) {
+    max-width: 1296px;
+  }
+
+  .products.collection {
+    margin-top: 40px;
+  }
+
+  .products.collection .products-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+  }
+}

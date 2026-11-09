@@ -1,0 +1,441 @@
+/* try-on-footer block — fully scoped under .try-on-footer
+ *
+ * Mobile-first. Breakpoints: 600px (tablet), 900px (desktop).
+ * All sizes below were measured from the reference designs:
+ *   desktop  → "Image 1" (≈1258px wide screenshot, ~1:1)
+ *   mobile   → "Image 3" (360px viewport, 16px side padding)
+ */
+.try-on-footer {
+  /* colors (sampled from the reference) */
+  --footer-bg: #050505;
+  --footer-fg: #fff;
+  --footer-link: #fff;
+  --footer-disclaimer: #efefef;
+  --footer-line: #1c1c1c;
+  --footer-accent: #c1f377;
+  --footer-field: #111;
+  --footer-field-border: #555;
+  --footer-placeholder: #7a7a7a;
+  --footer-social-bg: #141414;
+
+  /* typography
+   * body        → Inter
+   * condensed   → column titles + button label (site heading font, Roboto Condensed)
+   * display     → the big headline. Set this to the exact Figma face
+   *               (ultra-condensed, heavy) once it is loaded in fonts.css. */
+  --footer-font: 'Inter', var(--body-font), 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', arial, sans-serif;
+  --footer-condensed-font: var(--heading-font-family), 'Roboto Condensed', 'Arial Narrow', arial, sans-serif;
+  --footer-display-font: 'Druk Condensed', 'League Gothic', 'Anton', 'Bebas Neue', var(--footer-condensed-font);
+
+  /* sizing */
+  --footer-max-width: 1180px;
+  --footer-control-height: 44px;
+
+  box-sizing: border-box;
+  width: 100%;
+  background-color: var(--footer-bg);
+  color: var(--footer-fg);
+  font-family: var(--footer-font);
+  font-weight: 400;
+}
+
+.try-on-footer *,
+.try-on-footer *::before,
+.try-on-footer *::after {
+  box-sizing: border-box;
+}
+
+.try-on-footer .footer-inner {
+  max-width: var(--footer-max-width);
+  margin: 0 auto;
+  padding: 32px 16px 28px;
+}
+
+.try-on-footer a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.try-on-footer a:focus-visible,
+.try-on-footer button:focus-visible,
+.try-on-footer input:focus-visible {
+  outline: 2px solid var(--footer-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* visually hidden but available to assistive tech (e.g. the email field label) */
+.try-on-footer .footer-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- layout: intro + link columns ---------- */
+.try-on-footer .footer-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  row-gap: 32px;
+}
+
+.try-on-footer .footer-intro {
+  min-width: 0;
+}
+
+/* ---------- logo ---------- */
+.try-on-footer .footer-logo {
+  margin: 0;
+  font-family: var(--footer-display-font);
+  font-size: 24px;
+  font-style: italic;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+/* authored logo image (overrides the wordmark) */
+.try-on-footer .footer-logo.has-image {
+  font-style: normal;
+  line-height: 0;
+}
+
+.try-on-footer .footer-logo.has-image picture {
+  display: inline-block;
+}
+
+.try-on-footer .footer-logo.has-image img {
+  display: block;
+  width: auto;
+  height: 22px;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+/* ---------- headline ---------- */
+.try-on-footer .footer-heading {
+  max-width: 6em; /* breaks after "SYNC" at every size, even for a single-string heading */
+  margin: 16px 0 0;
+  font-family: var(--footer-display-font);
+  font-size: 34px;
+  font-weight: 700;
+  font-synthesis-weight: none;
+  line-height: 0.8;
+  letter-spacing: -0.005em;
+  text-transform: uppercase;
+}
+
+.try-on-footer .footer-subtext {
+  max-width: 320px;
+  margin: 22px 0 0;
+  color: var(--footer-fg);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+/* ---------- subscribe form ---------- */
+.try-on-footer .footer-subscribe {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 20px 0 0;
+}
+
+.try-on-footer .footer-subscribe input {
+  width: 100%;
+  height: var(--footer-control-height);
+  margin: 0;
+  padding: 0 16px;
+  border: 1px solid var(--footer-field-border);
+  border-radius: 0;
+  background: var(--footer-field);
+  color: var(--footer-fg);
+  font-family: inherit;
+  font-size: 16px; /* ≥16px stops iOS Safari zooming the page on focus */
+  appearance: none;
+}
+
+.try-on-footer .footer-subscribe input::placeholder {
+  color: var(--footer-placeholder);
+  font-size: 14px;
+  opacity: 1;
+}
+
+.try-on-footer .footer-subscribe button {
+  width: 100%;
+  height: var(--footer-control-height);
+  margin: 0;
+  padding: 0 24px;
+  border: 0;
+  border-radius: 0;
+  background: var(--footer-accent);
+  color: #000;
+  font-family: var(--footer-condensed-font);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: filter 0.15s ease;
+}
+
+.try-on-footer .footer-subscribe button:hover {
+  filter: brightness(1.06);
+}
+
+/* subscribe status — accent acknowledgement, collapses when empty */
+.try-on-footer .footer-form-status {
+  margin: 10px 0 0;
+  color: var(--footer-accent);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.try-on-footer .footer-form-status:empty {
+  display: none;
+}
+
+.try-on-footer .footer-disclaimer {
+  margin: 22px 0 0;
+  color: var(--footer-disclaimer);
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.try-on-footer .footer-form-status:not(:empty) + .footer-disclaimer {
+  margin-top: 12px;
+}
+
+/* ---------- social icons ---------- */
+.try-on-footer .footer-social {
+  display: flex;
+  gap: 16px;
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.try-on-footer .footer-social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--footer-social-bg);
+  color: var(--footer-fg);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.try-on-footer .footer-social svg {
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+
+.try-on-footer .footer-social a:hover,
+.try-on-footer .footer-social a:focus-visible {
+  background: var(--footer-accent);
+  color: #000;
+}
+
+/* ---------- link columns ---------- */
+.try-on-footer .footer-links {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 32px;
+}
+
+.try-on-footer .footer-col h2 {
+  margin: 0 0 20px;
+  color: var(--footer-fg);
+  font-family: var(--footer-condensed-font);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.3;
+  text-transform: uppercase; /* mobile design shows uppercase titles */
+}
+
+.try-on-footer .footer-col ul {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.try-on-footer .footer-col a:any-link {
+  color: var(--footer-link);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.try-on-footer .footer-col a:hover,
+.try-on-footer .footer-col a:focus-visible {
+  color: var(--footer-accent);
+}
+
+/* ---------- bottom bar ---------- */
+.try-on-footer .footer-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--footer-line);
+  color: var(--footer-fg);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.try-on-footer .footer-bottom p {
+  margin: 0;
+}
+
+.try-on-footer .footer-legal {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.try-on-footer .footer-bottom a:hover,
+.try-on-footer .footer-bottom a:focus-visible {
+  color: var(--footer-accent);
+}
+
+/* ---------- tablet (≥600px) ---------- */
+@media (min-width: 600px) {
+  .try-on-footer .footer-inner {
+    padding: 48px 24px 32px;
+  }
+
+  .try-on-footer .footer-logo.has-image img {
+    height: 28px;
+  }
+
+  .try-on-footer .footer-heading {
+    margin-top: 24px;
+    font-size: clamp(48px, 5.8vw, 72px);
+  }
+
+  .try-on-footer .footer-subtext {
+    margin-top: 16px;
+  }
+
+  .try-on-footer .footer-subscribe {
+    flex-direction: row;
+    gap: 12px;
+    max-width: 395px;
+    margin-top: 24px;
+  }
+
+  .try-on-footer .footer-subscribe input {
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 0;
+  }
+
+  .try-on-footer .footer-subscribe button {
+    flex: 0 0 158px;
+    width: 158px;
+    padding: 0;
+  }
+
+  .try-on-footer .footer-disclaimer {
+    max-width: 370px;
+    margin-top: 16px;
+  }
+
+  .try-on-footer .footer-social {
+    gap: 14px;
+    margin-top: 20px;
+  }
+
+  .try-on-footer .footer-social a {
+    width: 44px;
+    height: 44px;
+  }
+
+  .try-on-footer .footer-links {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px 32px;
+  }
+
+  .try-on-footer .footer-col h2 {
+    margin-bottom: 16px;
+    font-size: 18px;
+    text-transform: none; /* desktop/tablet design uses sentence case */
+  }
+
+  .try-on-footer .footer-col ul {
+    gap: 11px;
+  }
+
+  .try-on-footer .footer-bottom {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 40px;
+    padding-top: 0;
+    border-top: 0;
+    font-size: 13px;
+    line-height: 18px;
+  }
+
+  .try-on-footer .footer-legal {
+    flex-direction: row;
+    gap: 18px;
+  }
+}
+
+/* ---------- desktop (≥900px) ---------- */
+@media (min-width: 900px) {
+  .try-on-footer .footer-inner {
+    padding: 58px 24px 32px;
+  }
+
+  .try-on-footer .footer-top {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    column-gap: 48px;
+  }
+
+  .try-on-footer .footer-subtext {
+    max-width: 300px;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .try-on-footer .footer-disclaimer {
+    font-size: 11px;
+    line-height: 1.65;
+  }
+
+  .try-on-footer .footer-links {
+    grid-template-columns: repeat(3, minmax(0, 165px));
+    gap: 0;
+  }
+
+  .try-on-footer .footer-col a:any-link {
+    font-size: 13px;
+    line-height: 18px;
+  }
+
+  .try-on-footer .footer-bottom {
+    margin-top: 28px;
+  }
+}
